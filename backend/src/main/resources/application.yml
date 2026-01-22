@@ -1,8 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/cloudyprotection
-    username: cloudy
-    password: cloudy
+    url: jdbc:mysql://localhost:3308/cloudyprotection
+    username: root
+    password: 12345
+    autoconfigure:
+      exclude:
+        - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+        - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
   jpa:
     hibernate:
       ddl-auto: validate
