@@ -30,6 +30,10 @@ public class User {
     @Column(nullable = false)
     private Instant createdAt = Instant.now();
 
+    // 🔹 ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
+    protected User() {
+    }
+
     public Long getId() {
         return id;
     }

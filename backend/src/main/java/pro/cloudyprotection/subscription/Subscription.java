@@ -31,6 +31,10 @@ public class Subscription {
     @Column(nullable = false)
     private SubscriptionStatus status = SubscriptionStatus.ACTIVE;
 
+    // 🔹 ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
+    protected Subscription() {
+    }
+
     public User getUser() {
         return user;
     }
