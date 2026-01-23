@@ -28,5 +28,59 @@ public class VpnServer {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    // getters / setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getApiUrl() {
+        return apiUrl;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    public String getApiUsername() {
+        return apiUsername;
+    }
+
+    public void setApiUsername(String apiUsername) {
+        this.apiUsername = apiUsername;
+    }
+
+    public String getApiPassword() {
+        return apiPassword;
+    }
+
+    public void setApiPassword(String apiPassword) {
+        this.apiPassword = apiPassword;
+    }
+
+    public Long getInboundId() {
+        return inboundId;
+    }
+
+    public void setInboundId(Long inboundId) {
+        this.inboundId = inboundId;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

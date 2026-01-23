@@ -31,5 +31,51 @@ public class Subscription {
     @Column(nullable = false)
     private SubscriptionStatus status = SubscriptionStatus.ACTIVE;
 
-    // getters / setters
+    public User getUser() {
+        return user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public VpnServer getVpnServer() {
+        return vpnServer;
+    }
+
+    public UUID getClientUuid() {
+        return clientUuid;
+    }
+
+    public Instant getExpiresAt() {
+        return expiresAt;
+    }
+
+    public SubscriptionStatus getStatus() {
+        return status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setVpnServer(VpnServer vpnServer) {
+        this.vpnServer = vpnServer;
+    }
+
+    public void setExpiresAt(Instant expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public void setClientUuid(UUID clientUuid) {
+        this.clientUuid = clientUuid;
+    }
+
+    public void setStatus(SubscriptionStatus status) {
+        this.status = status;
+    }
 }

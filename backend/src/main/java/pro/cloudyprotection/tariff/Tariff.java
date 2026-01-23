@@ -19,5 +19,39 @@ public class Tariff {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    // getters / setters
+    // 🔹 ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
+    protected Tariff() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public int getPriceRub() {
+        return priceRub;
+    }
+
+    public void setPriceRub(int priceRub) {
+        this.priceRub = priceRub;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }
