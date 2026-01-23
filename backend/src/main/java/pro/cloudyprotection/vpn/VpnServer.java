@@ -28,7 +28,7 @@ public class VpnServer {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    // 🔹 ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
+    //ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
     protected VpnServer() {
     }
 

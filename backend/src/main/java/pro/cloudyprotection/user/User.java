@@ -31,7 +31,7 @@ public class User {
     private Instant createdAt = Instant.now();
 
     // 🔹 ОБЯЗАТЕЛЬНЫЙ пустой конструктор для JPA
-    protected User() {
+    public User() {
     }
 
     public Long getId() {
