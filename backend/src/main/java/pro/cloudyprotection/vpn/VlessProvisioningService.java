@@ -5,6 +5,7 @@ import pro.cloudyprotection.subscription.Subscription;
 import pro.cloudyprotection.vpn.threexui.ThreeXuiClient;
 import pro.cloudyprotection.vpn.threexui.dto.AddClientRequest;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -19,12 +20,19 @@ public class VlessProvisioningService {
     public void provision(Subscription subscription) {
 
         UUID uuid = subscription.getClientUuid();
+        Instant expiresAt = subscription.getExpiresAt();
 
-        long expiryMillis = subscription.getExpiresAt().toEpochMilli();
+        long expiryMillis = expiresAt.toEpochMilli();
 
+        AddClientRequest request = new AddClientRequest(
+                uuid,
+                subscription.getUser().getEmail(),
+                expiryMillis
+        );
 
-        AddClientRequest request = new AddClientRequest(uuid, subscription.getUser().getEmail(), expiryMillis);
-
-        threeXuiClient.addVlessClient(subscription.getVpnServer(), request);
+        threeXuiClient.addVlessClient(
+                subscription.getVpnServer(),
+                request
+        );
     }
 }

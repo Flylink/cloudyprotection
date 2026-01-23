@@ -2,10 +2,7 @@ package pro.cloudyprotection.subscription;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pro.cloudyprotection.subscription.dto.SubscriptionAccessDto;
 import pro.cloudyprotection.tariff.Tariff;
 import pro.cloudyprotection.tariff.TariffRepository;
@@ -26,8 +23,7 @@ public class SubscriptionController {
             SubscriptionService subscriptionService,
             TariffRepository tariffRepository,
             UserRepository userRepository,
-            VlessUriBuilder  vlessUriBuilder
-
+            VlessUriBuilder vlessUriBuilder
     ) {
         this.subscriptionService = subscriptionService;
         this.tariffRepository = tariffRepository;
@@ -49,10 +45,7 @@ public class SubscriptionController {
         Subscription subscription =
                 subscriptionService.createOrExtendSubscription(user, tariff);
 
-        String vlessUri = vlessUriBuilder.build(
-                subscription.getVpnServer(),
-                subscription.getClientUuid()
-        );
+        String vlessUri = vlessUriBuilder.build(subscription);
 
         return new SubscriptionAccessDto(
                 vlessUri,

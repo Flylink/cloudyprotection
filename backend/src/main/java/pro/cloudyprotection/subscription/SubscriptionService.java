@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pro.cloudyprotection.tariff.Tariff;
 import pro.cloudyprotection.user.User;
+import pro.cloudyprotection.vpn.VpnInbound;
 import pro.cloudyprotection.vpn.VpnProvisioningService;
 import pro.cloudyprotection.vpn.VpnServer;
 import pro.cloudyprotection.vpn.VpnServerRepository;
@@ -93,4 +94,15 @@ public class SubscriptionService {
                                             new IllegalStateException("No enabled VPN servers available")
                        );
     }
+
+    private VpnInbound selectInbound(VpnServer server) {
+        return inboundRepository
+                       .findByServerAndEnabledTrue(server)
+                       .stream()
+                       .findFirst()
+                       .orElseThrow(() ->
+                                            new IllegalStateException("No enabled inbound")
+                       );
+    }
+
 }
