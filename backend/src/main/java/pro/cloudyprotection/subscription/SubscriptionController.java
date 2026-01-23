@@ -2,10 +2,16 @@ package pro.cloudyprotection.subscription;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
-import pro.cloudyprotection.subscription.dto.SubscriptionResponse;
-import pro.cloudyprotection.tariff.*;
-import pro.cloudyprotection.user.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import pro.cloudyprotection.subscription.dto.SubscriptionAccessDto;
+import pro.cloudyprotection.tariff.Tariff;
+import pro.cloudyprotection.tariff.TariffRepository;
+import pro.cloudyprotection.user.User;
+import pro.cloudyprotection.user.UserRepository;
+import pro.cloudyprotection.vpn.VlessUriBuilder;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -14,31 +20,44 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final TariffRepository tariffRepository;
     private final UserRepository userRepository;
+    private final VlessUriBuilder vlessUriBuilder;
 
     public SubscriptionController(
             SubscriptionService subscriptionService,
             TariffRepository tariffRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            VlessUriBuilder  vlessUriBuilder
+
     ) {
         this.subscriptionService = subscriptionService;
         this.tariffRepository = tariffRepository;
         this.userRepository = userRepository;
+        this.vlessUriBuilder = vlessUriBuilder;
     }
 
     @PostMapping("/buy/{tariffId}")
-    public SubscriptionResponse buy(
+    public SubscriptionAccessDto buy(
             @PathVariable("tariffId") Long tariffId,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         User user = userRepository.findByEmail(userDetails.getUsername())
-                            .orElseThrow(() -> new RuntimeException("User not found"));
+                            .orElseThrow();
 
         Tariff tariff = tariffRepository.findById(tariffId)
-                                .orElseThrow(() -> new RuntimeException("Tariff not found"));
+                                .orElseThrow();
 
         Subscription subscription =
                 subscriptionService.createOrExtendSubscription(user, tariff);
 
-        return SubscriptionResponse.from(subscription);
+        String vlessUri = vlessUriBuilder.build(
+                subscription.getVpnServer(),
+                subscription.getClientUuid()
+        );
+
+        return new SubscriptionAccessDto(
+                vlessUri,
+                subscription.getExpiresAt(),
+                subscription.getVpnServer().getName()
+        );
     }
 }
