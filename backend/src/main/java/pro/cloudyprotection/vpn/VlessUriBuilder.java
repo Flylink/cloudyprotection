@@ -8,7 +8,7 @@ public class VlessUriBuilder {
 
     public String build(Subscription subscription) {
 
-        String uuid = subscription.getClientUuid();
+        String uuid = subscription.getClientUuid().toString(); // ✅ ВОТ ЗДЕСЬ
         String host = extractHost(subscription.getVpnServer().getApiUrl());
         int port = 443;
 

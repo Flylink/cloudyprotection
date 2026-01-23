@@ -3,7 +3,6 @@ package pro.cloudyprotection.subscription;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pro.cloudyprotection.vpn.VlessProvisioningService;
 
 import java.time.Instant;
 import java.util.List;
@@ -12,14 +11,11 @@ import java.util.List;
 public class SubscriptionExpiryScheduler {
 
     private final SubscriptionRepository subscriptionRepository;
-    private final VlessProvisioningService vlessProvisioningService;
 
     public SubscriptionExpiryScheduler(
-            SubscriptionRepository subscriptionRepository,
-            VlessProvisioningService vlessProvisioningService
+            SubscriptionRepository subscriptionRepository
     ) {
         this.subscriptionRepository = subscriptionRepository;
-        this.vlessProvisioningService = vlessProvisioningService;
     }
 
     @Scheduled(fixedDelay = 60_000) // 1 минута
@@ -34,7 +30,6 @@ public class SubscriptionExpiryScheduler {
 
         for (Subscription subscription : expired) {
             subscription.setStatus(SubscriptionStatus.EXPIRED);
-            vlessProvisioningService.disable(subscription);
         }
     }
 }
